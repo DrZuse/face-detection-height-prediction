@@ -1,4 +1,6 @@
 import os, cv2, csv
+import numpy as np
+from PIL import Image
 from deepface import DeepFace
 import keras_core as keras
 
@@ -25,7 +27,7 @@ def output_data(output, file, output_obj, image):
             csvwriter.writerow([
                 file, face_id, f['confidence'], f['age'], 
                 f['dominant_gender'], f['dominant_race'], 
-                f['dominant_emotion'], 'height'])
+                f['dominant_emotion'], f['height']])
 
 
 def face_recognition(input, output):
@@ -46,6 +48,7 @@ def face_recognition(input, output):
         else:
             output_obj = []
             for d in detections:
+                print(d)
                 x, y, w, h = d['facial_area'].values()
                 detected_face = image[y:y+h, x:x+w]
                 
@@ -61,11 +64,46 @@ def face_recognition(input, output):
                 
 
                 # to make predictions in production, load the model
-                loaded_model = keras_core.saving.load_model('model.keras')
+                loaded_model = keras.saving.load_model('face_to_height_model.h5')
+
+                # print(type(d['face']))
+                # print(d['face'].shape)
+
+                print(type(detected_face))
+                print(detected_face.shape)
+                
+                # Convert the region array back to an image
+                region_image = Image.fromarray(detected_face)
+
+                old_size = region_image.size
+                # calculate the new size maintaining the aspect ratio
+                ratio = min(128.0 / old_size[0], 128.0 / old_size[1])
+                new_size = tuple([int(x*ratio) for x in old_size])
+
+                # resize the image
+                resized_img = region_image.resize(new_size, Image.ANTIALIAS)
+
+                # create a new image with a white background
+                new_img = Image.new('RGB', (128, 128), 'black')
+                new_img.paste(resized_img, ((128-new_size[0])//2, (128-new_size[1])//2))
+                
+                # save the resized image
+                new_img.save(os.path.join(output, file[:-4]+'.bmp'))
+
+                output_array = np.array(new_img)
+                print(type(detected_face))
+                print(detected_face.shape)
+                #img = cv2.imread('aaroncarter.bmp')
+                #img = cv2.cvtColor(detected_face, cv2.COLOR_BGR2RGB)  # Convert to RGB
+
+                output_array = output_array / 255.0  # Normalize pixel values
+                output_array = np.expand_dims(output_array, axis=0)  # Add batch dimension
 
                 # Use the loaded model to make predictions
-                predictions = loaded_model.predict(your_data)
+                predicted_height = loaded_model.predict(output_array)[0][0]
+                print(predicted_height)
 
+                face_analyze[0]['height'] = predicted_height
 
                 output_obj.extend(face_analyze)
 
