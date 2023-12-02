@@ -1,0 +1,3 @@
+keras-core
+opencv-python
+deepface
