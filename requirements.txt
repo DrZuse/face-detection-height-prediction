@@ -1,3 +1,6 @@
 keras-core
 opencv-python
 deepface
+python-csv
+numpy
+Pillow
