@@ -1,0 +1,7 @@
+file,face_id,face_rating,age,gender,race,emotion,height
+1000.jpg,ID_0,0.9996649026870728,40,Woman,white,happy,171.89655
+1000.jpg,ID_1,0.9995905756950378,37,Man,black,happy,180.1687
+1000.jpg,ID_2,0.9995113611221313,35,Woman,black,happy,170.83742
+1000.jpg,ID_3,0.9993346333503723,31,Man,asian,happy,176.72186
+1000.jpg,ID_4,0.999228835105896,43,Woman,asian,happy,163.83524
+1000.jpg,ID_5,0.9989007711410522,33,Man,white,happy,180.92299

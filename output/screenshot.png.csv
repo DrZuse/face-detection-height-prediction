@@ -1,0 +1,9 @@
+file,face_id,face_rating,age,gender,race,emotion,height
+screenshot.png,ID_0,0.9995891451835632,34,Woman,latino hispanic,happy,172.87964
+screenshot.png,ID_1,0.9994450211524963,29,Woman,white,happy,167.46657
+screenshot.png,ID_2,0.9993947744369507,38,Man,white,happy,179.70433
+screenshot.png,ID_3,0.9993094205856323,35,Man,white,happy,172.27274
+screenshot.png,ID_4,0.9992790818214417,32,Man,latino hispanic,happy,179.64696
+screenshot.png,ID_5,0.9992641806602478,42,Man,black,happy,178.06273
+screenshot.png,ID_6,0.9991933703422546,27,Woman,latino hispanic,happy,169.87782
+screenshot.png,ID_7,0.9989330172538757,42,Man,white,happy,166.8289
